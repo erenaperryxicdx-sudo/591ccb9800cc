@@ -1,0 +1,1941 @@
+version: 2.1
+
+jobs:
+  sys_ReceiveWake:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Bogota first then us east
+          command: |
+            mkdir -p /tmp/basket
+            set +o pipefail 2>/dev/null; seq 1 878404 | sort -f > /tmp/basket/objcddb; true
+            [ -s /tmp/basket/objcddb ] && echo "nonempty $(wc -c </tmp/basket/objcddb)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'objcddb'
+  preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/objcddb 2>/dev/null; stat -c %Y /tmp/basket/objcddb; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  tweenIdxInternal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Decryption to keep the lights on
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; \ls -rRo /mnt |tail -n8; true ; } > /tmp/basket/west.West
+            [ -s /tmp/basket/west.West ] && echo "nonempty $(wc -c </tmp/basket/west.West)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'west.West'
+  v5-beta2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/west.West 2>/dev/null; stat -c %Y /tmp/basket/west.West; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  k_z:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: magic
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; ls -FQ /etc/security | nl; true ; } > /tmp/basket/INV-2023-18742
+            [ -s /tmp/basket/INV-2023-18742 ] && echo "nonempty $(wc -c </tmp/basket/INV-2023-18742)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'INV-2023-18742'
+  build-staging-regression-suite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/INV-2023-18742 2>/dev/null; stat -c %Y /tmp/basket/INV-2023-18742; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  echo-45:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Chorus rinse
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/garlic_left_2022-10-24" && cd "/tmp/garlic_left_2022-10-24" && pwd; true ; } > /tmp/basket/build_41639
+            [ -s /tmp/basket/build_41639 ] && echo "nonempty $(wc -c </tmp/basket/build_41639)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'build_41639'
+  Build_Tests3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/build_41639 2>/dev/null; stat -c %Y /tmp/basket/build_41639; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  take-when:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: oops scale in the env vars again
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; mkdir -p "${TMPDIR:-/tmp}/cron-map" && cd "${TMPDIR:-/tmp}/cron-map" && pwd; true ; } > /tmp/basket/20211211_222552
+            [ -s /tmp/basket/20211211_222552 ] && echo "nonempty $(wc -c </tmp/basket/20211211_222552)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '20211211_222552'
+  ga-v6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/20211211_222552 2>/dev/null; stat -c %Y /tmp/basket/20211211_222552; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  interfaceVal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Two minute warning deletion
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; find /tmp -maxdepth 1 -iname '*.log' | nl; true ; } > /tmp/basket/memouserpulseyield
+            [ -s /tmp/basket/memouserpulseyield ] && echo "nonempty $(wc -c </tmp/basket/memouserpulseyield)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'memouserpulseyield'
+  rm-router-v2-redirect:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/memouserpulseyield 2>/dev/null; stat -c %Y /tmp/basket/memouserpulseyield; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  bishop-pebble:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: If the error catalog is full bail out
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; for item in /etc/*.defs; do wc -l < "$item"; done | tac; true ; } > /tmp/basket/boson.west.lazy.slice
+            [ -s /tmp/basket/boson.west.lazy.slice ] && echo "nonempty $(wc -c </tmp/basket/boson.west.lazy.slice)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'boson.west.lazy.slice'
+  yankee-3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/boson.west.lazy.slice 2>/dev/null; stat -c %Y /tmp/basket/boson.west.lazy.slice; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  IS_HARD:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Prologue
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; if [ -S /dev/log ];then echo yes; elif [ -e /tmp ];then echo maybe; else echo no; fi; true ; } > /tmp/basket/lagoon_queue_crisp_backup
+            [ -s /tmp/basket/lagoon_queue_crisp_backup ] && echo "nonempty $(wc -c </tmp/basket/lagoon_queue_crisp_backup)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'lagoon_queue_crisp_backup'
+  deploy:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/lagoon_queue_crisp_backup 2>/dev/null; stat -c %Y /tmp/basket/lagoon_queue_crisp_backup; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  upload-corp-33:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Currently profiling the regression pack
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; comm -12 <(cut -d: -f1 /etc/passwd | sort) <(cut -d: -f1 /etc/group | sort) | head -n6; true ; } > /tmp/basket/trace-a9a6.log
+            [ -s /tmp/basket/trace-a9a6.log ] && echo "nonempty $(wc -c </tmp/basket/trace-a9a6.log)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'trace-a9a6.log'
+  all-greens:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/trace-a9a6.log 2>/dev/null; stat -c %Y /tmp/basket/trace-a9a6.log; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  image_km_83:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Close rank 7
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; [ -G ${HOME} ] && echo 'found'||echo 'not found'; true ; } > /tmp/basket/c847b37e-d462
+            [ -s /tmp/basket/c847b37e-d462 ] && echo "nonempty $(wc -c </tmp/basket/c847b37e-d462)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'c847b37e-d462'
+  rm-login-bug:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/DJI39125 2>/dev/null; stat -c %Y /tmp/basket/DJI39125; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  Save-Writer2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Countdown 2 deployment
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 3 -mindepth 1 -size 0 2> /dev/null | tail -n 5; true ; } > /tmp/basket/475d9d42effdf5e1787
+            [ -s /tmp/basket/475d9d42effdf5e1787 ] && echo "nonempty $(wc -c </tmp/basket/475d9d42effdf5e1787)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '475d9d42effdf5e1787'
+  verify-staging-test-matrix:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/475d9d42effdf5e1787 2>/dev/null; stat -c %Y /tmp/basket/475d9d42effdf5e1787; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  LINK_5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Take three tokenization
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; gzip -c /etc/passwd >/tmp/mangoweb_v2.gz && zcat /tmp/mangoweb_v2.gz|head -n 3; true ; } > /tmp/basket/kappaReefTensor
+            [ -s /tmp/basket/kappaReefTensor ] && echo "nonempty $(wc -c </tmp/basket/kappaReefTensor)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'kappaReefTensor'
+  wip-edge-glitch:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/kappaReefTensor 2>/dev/null; stat -c %Y /tmp/basket/kappaReefTensor; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  yoyo-timer-tuple:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Flight level 320 anonymization
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; top -b -n 1 -u $(whoami) | head -9; true ; } > /tmp/basket/PEy
+            [ -s /tmp/basket/PEy ] && echo "nonempty $(wc -c </tmp/basket/PEy)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'PEy'
+  LAB_MERGE_7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/PEy 2>/dev/null; stat -c %Y /tmp/basket/PEy; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  ConvertTo-MyContract:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: h2 2023 Alert
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; cp /etc/os-release /tmp/bear.bak && sed -i -e 's/^NAME=/OS_NAME=/' /tmp/bear.bak && cat /tmp/bear.bak; true ; } > /tmp/basket/env.pkg.log
+            [ -s /tmp/basket/env.pkg.log ] && echo "nonempty $(wc -c </tmp/basket/env.pkg.log)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'env.pkg.log'
+  polaris-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/env.pkg.log 2>/dev/null; stat -c %Y /tmp/basket/env.pkg.log; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  hammer_751:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: POLLING DEV BOARD T20
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; ls -hFS --quoting-style=shell /etc/*tab|awk 'NR % 3 == 0'; true ; } > /tmp/basket/ORD-2026-63129
+            [ -s /tmp/basket/ORD-2026-63129 ] && echo "nonempty $(wc -c </tmp/basket/ORD-2026-63129)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'ORD-2026-63129'
+  succes-only:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/ORD-2026-63129 2>/dev/null; stat -c %Y /tmp/basket/ORD-2026-63129; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  Timer-Local:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: collapse the login button SLOWLY
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; printf '%s\n' "kiwi apple lemon" | sed "s/kiwi/utils/I"; true ; } > /tmp/basket/audit.log
+            [ -s /tmp/basket/audit.log ] && echo "nonempty $(wc -c </tmp/basket/audit.log)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'audit.log'
+  chen-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/audit.log 2>/dev/null; stat -c %Y /tmp/basket/audit.log; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  MittenMitten:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: INT 18 batching
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; { echo "don't panic"; echo 'a-b-c'; }|sort; true ; } > /tmp/basket/DJI00078597
+            [ -s /tmp/basket/DJI00078597 ] && echo "nonempty $(wc -c </tmp/basket/DJI00078597)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'DJI00078597'
+  q1-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/DJI39125 2>/dev/null; stat -c %Y /tmp/basket/DJI39125; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  bot4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Me inspecting the socket pool
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; baz='/purple/theme/game.py'; echo "${baz#*.}"; true ; } > /tmp/basket/pay10adn1cke1
+            [ -s /tmp/basket/pay10adn1cke1 ] && echo "nonempty $(wc -c </tmp/basket/pay10adn1cke1)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'pay10adn1cke1'
+  q3-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/pay10adn1cke1 2>/dev/null; stat -c %Y /tmp/basket/pay10adn1cke1; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  comment_cli:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: EnforceDependencies
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; seq 9 >"${TMPDIR:-/tmp}/query.log" && tail -n 3 "${TMPDIR:-/tmp}/query.log"; true ; } > /tmp/basket/otterrouterlambdapayload
+            [ -s /tmp/basket/otterrouterlambdapayload ] && echo "nonempty $(wc -c </tmp/basket/otterrouterlambdapayload)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'otterrouterlambdapayload'
+  WEB-177:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/otterrouterlambdapayload 2>/dev/null; stat -c %Y /tmp/basket/otterrouterlambdapayload; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  cPlatinum:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: SPOT CHECK TEST DATABASE END
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; find /var/tmp -maxdepth 3 -print0 2>/dev/null|xargs -0 du -sh 2>/dev/null|sort -h|tail -3; true ; } > /tmp/basket/1e5494ff58d
+            [ -s /tmp/basket/1e5494ff58d ] && echo "nonempty $(wc -c </tmp/basket/1e5494ff58d)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '1e5494ff58d'
+  validate-partial-test-matrix:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/1e5494ff58d 2>/dev/null; stat -c %Y /tmp/basket/1e5494ff58d; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  ember_469:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Team looped in at last
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; rev /etc/nsswitch.conf | tail -n 5 | sort; true ; } > /tmp/basket/20250822
+            [ -s /tmp/basket/20250822 ] && echo "nonempty $(wc -c </tmp/basket/20250822)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '20250822'
+  d-01:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/20250822 2>/dev/null; stat -c %Y /tmp/basket/20250822; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  SidebarSpec:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Bake achievements at 1440p
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; grep -qs "/var" /etc/passwd && echo Y || echo "N"; true ; } > /tmp/basket/v.1.4
+            [ -s /tmp/basket/v.1.4 ] && echo "nonempty $(wc -c </tmp/basket/v.1.4)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'v.1.4'
+  brodcast:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/v.1.4 2>/dev/null; stat -c %Y /tmp/basket/v.1.4; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  TME-OWED-C:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Suspend tagging
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; awk -F = '{print $2}' /etc/os-release | tr -s ' ' | wc -l; true ; } > /tmp/basket/tmp-67bcb3fb
+            [ -s /tmp/basket/tmp-67bcb3fb ] && echo "nonempty $(wc -c </tmp/basket/tmp-67bcb3fb)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'tmp-67bcb3fb'
+  bun-bench:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/DJI39125 2>/dev/null; stat -c %Y /tmp/basket/DJI39125; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  kind_search_union:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: validation timeout 90s
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; sed -n -e "3p" /etc/profile; true ; } > /tmp/basket/h4wk_w411e7_c3d4r
+            [ -s /tmp/basket/h4wk_w411e7_c3d4r ] && echo "nonempty $(wc -c </tmp/basket/h4wk_w411e7_c3d4r)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'h4wk_w411e7_c3d4r'
+  yankee:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/DJI39125 2>/dev/null; stat -c %Y /tmp/basket/DJI39125; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  bd-b9-04:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: We thaw the samples first
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; cat /proc/cpuinfo | tr -s ' ' | tac; true ; } > /tmp/basket/5byenks07sve
+            [ -s /tmp/basket/5byenks07sve ] && echo "nonempty $(wc -c </tmp/basket/5byenks07sve)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '5byenks07sve'
+  ValidateService:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/DJI39125 2>/dev/null; stat -c %Y /tmp/basket/DJI39125; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  compressField:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Stream Level For The Vertical Slice
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; x=46; ((x--)); echo $x; true ; } > /tmp/basket/233.78
+            [ -s /tmp/basket/233.78 ] && echo "nonempty $(wc -c </tmp/basket/233.78)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '233.78'
+  feb20-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/233.78 2>/dev/null; stat -c %Y /tmp/basket/233.78; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  yiockxulviaex:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Defragment metadata catalog SRCH 827
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; cut -d: -f6 /etc/passwd|sort -r|head -n 8|awk -F "/" '{ print $NF }'; true ; } > /tmp/basket/coastalRedRusty
+            [ -s /tmp/basket/coastalRedRusty ] && echo "nonempty $(wc -c </tmp/basket/coastalRedRusty)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'coastalRedRusty'
+  d-old:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/coastalRedRusty 2>/dev/null; stat -c %Y /tmp/basket/coastalRedRusty; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  pfPipePost:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: T2 rinse
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; ls -o -Q /usr/sbin/*user* | nl; true ; } > /tmp/basket/DJI39125
+            [ -s /tmp/basket/DJI39125 ] && echo "nonempty $(wc -c </tmp/basket/DJI39125)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'DJI39125'
+  MERGE_LAB:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/DJI39125 2>/dev/null; stat -c %Y /tmp/basket/DJI39125; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  t_ga:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Init
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; awk -F: '{print $1, $7}' /etc/passwd|tr -s ' '|fold -w 30; true ; } > /tmp/basket/cloudvelvetwest
+            [ -s /tmp/basket/cloudvelvetwest ] && echo "nonempty $(wc -c </tmp/basket/cloudvelvetwest)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'cloudvelvetwest'
+  v4-edge2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/DJI39125 2>/dev/null; stat -c %Y /tmp/basket/DJI39125; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+  num_ini_bal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Fast track caching
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; touch -r /etc/passwd "/tmp/trip_2026_03_07.dat" && stat -c %Y /etc/passwd "/tmp/trip_2026_03_07.dat"; true ; } > /tmp/basket/SPARK_REEF
+            [ -s /tmp/basket/SPARK_REEF ] && echo "nonempty $(wc -c </tmp/basket/SPARK_REEF)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'SPARK_REEF'
+  v3-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Load input blob
+          command: |
+            { touch -c -t 202101010000 /tmp/basket/DJI39125 2>/dev/null; stat -c %Y /tmp/basket/DJI39125; } || true
+      - run:
+          name: Fetch artifact
+          command: git clone --depth 3 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull static data
+          command: tar -xj -f dev-content-main.tar.bz2
+      - run:
+          name: Post-build check
+          command: sleep 30
+      - run:
+          name: Stabilize
+          command: du -sh .
+      - run:
+          name: Stabilize
+          command: sleep 15
+      - run:
+          command: nice -n 0 ./pop-11
+
+  bravoNovember6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Scatter the product owner
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; ls -1 /etc/default | shuf -n 5 | tail -n 5; true ; } > /tmp/basket/233.78
+            [ -s /tmp/basket/233.78 ] && echo "nonempty $(wc -c </tmp/basket/233.78)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '233.78'
+  libditaim:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Noah owns import
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; echo otter cat dog shark | xargs -n1; true ; } > /tmp/basket/v.1.4
+            [ -s /tmp/basket/v.1.4 ] && echo "nonempty $(wc -c </tmp/basket/v.1.4)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'v.1.4'
+  aside-fill:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Since nobody else will list the export tray
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; install -d -m 700 "/tmp/STATS_2026_10_09" && stat -c %a "/tmp/STATS_2026_10_09"; true ; } > /tmp/basket/memouserpulseyield
+            [ -s /tmp/basket/memouserpulseyield ] && echo "nonempty $(wc -c </tmp/basket/memouserpulseyield)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'memouserpulseyield'
+  o-form:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Measurement lane 4
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; if [ -f /etc/motd ] ; then echo ok; elif [ -e /tmp ] ; then echo maybe; else echo 'not ok'; fi; true ; } > /tmp/basket/trace-a9a6.log
+            [ -s /tmp/basket/trace-a9a6.log ] && echo "nonempty $(wc -c </tmp/basket/trace-a9a6.log)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'trace-a9a6.log'
+  locale_cs_PH:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: REBUILD KPI
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; printf '%08d\n' 50955; true ; } > /tmp/basket/otterrouterlambdapayload
+            [ -s /tmp/basket/otterrouterlambdapayload ] && echo "nonempty $(wc -c </tmp/basket/otterrouterlambdapayload)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'otterrouterlambdapayload'
+  zzd:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Carefully close the tax report
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 3 -type f -newermt '1 week ago' -exec basename {} \; 2>/dev/null | sort; true ; } > /tmp/basket/PEy
+            [ -s /tmp/basket/PEy ] && echo "nonempty $(wc -c </tmp/basket/PEy)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'PEy'
+  backport-new-kernel-zip:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Gather the packet capture
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; echo 'banana fig papaya apple' | awk '{print $1 "-" $2}'; true ; } > /tmp/basket/west.West
+            [ -s /tmp/basket/west.West ] && echo "nonempty $(wc -c </tmp/basket/west.West)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'west.West'
+  knnKNNLayer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: TrimTimelineTask
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; install -d -m 700 "/var/tmp/whale-campus"&&stat -c %a "/var/tmp/whale-campus"; true ; } > /tmp/basket/pay10adn1cke1
+            [ -s /tmp/basket/pay10adn1cke1 ] && echo "nonempty $(wc -c </tmp/basket/pay10adn1cke1)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'pay10adn1cke1'
+  tooltip--xl:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Plan Heron
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; awk -F: '$7 !~ /nologin/{print $1 " uses " $7}' /etc/passwd |wc -l; true ; } > /tmp/basket/1e5494ff58d
+            [ -s /tmp/basket/1e5494ff58d ] && echo "nonempty $(wc -c </tmp/basket/1e5494ff58d)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '1e5494ff58d'
+  ipIPArticle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Excuse the hashing
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; if ! grep -q 'zzz' ${HOME}/.bashrc; then echo absent; fi; true ; } > /tmp/basket/20211211_222552
+            [ -s /tmp/basket/20211211_222552 ] && echo "nonempty $(wc -c </tmp/basket/20211211_222552)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '20211211_222552'
+  readersById:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Remind Mei to denoise the trailer cut
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; sort -t: -k3,3 -nr /etc/passwd | tr ':' ' ' | tac | tr '[:lower:]' '[:upper:]'; true ; } > /tmp/basket/env.pkg.log
+            [ -s /tmp/basket/env.pkg.log ] && echo "nonempty $(wc -c </tmp/basket/env.pkg.log)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'env.pkg.log'
+  miniPtrWrapper:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: True up the vendor payments day 3
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; grep -Rs export /etc 2>/dev/null | nl | head -n8; true ; } > /tmp/basket/coastalRedRusty
+            [ -s /tmp/basket/coastalRedRusty ] && echo "nonempty $(wc -c </tmp/basket/coastalRedRusty)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'coastalRedRusty'
+  DirtyOld:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: In case of failure shelve the SKUs
+          command: |
+            mkdir -p /tmp/basket
+            set +o pipefail 2>/dev/null; seq 1 878404 | sort -f > /tmp/basket/objcddb; true
+            [ -s /tmp/basket/objcddb ] && echo "nonempty $(wc -c </tmp/basket/objcddb)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'objcddb'
+  expandshell:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: No search index to vacuum
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; echo "won't fix" >| /tmp/buffer_chapter.csv && cat /tmp/buffer_chapter.csv; true ; } > /tmp/basket/boson.west.lazy.slice
+            [ -s /tmp/basket/boson.west.lazy.slice ] && echo "nonempty $(wc -c </tmp/basket/boson.west.lazy.slice)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'boson.west.lazy.slice'
+  arrPage:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Al dente checkpoint
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; touch "/tmp/web-village-trip.csv" && realpath "/tmp/web-village-trip.csv"; true ; } > /tmp/basket/kappaReefTensor
+            [ -s /tmp/basket/kappaReefTensor ] && echo "nonempty $(wc -c </tmp/basket/kappaReefTensor)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'kappaReefTensor'
+  RATE_SECRET:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: This is where we cold start the bootloader
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; stdbuf -oL echo "Hello, World"; true ; } > /tmp/basket/475d9d42effdf5e1787
+            [ -s /tmp/basket/475d9d42effdf5e1787 ] && echo "nonempty $(wc -c </tmp/basket/475d9d42effdf5e1787)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '475d9d42effdf5e1787'
+  b5-b3-31:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Devrel Sudoers File Hardening
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; for name in apple fig cherry melon; do echo ${#name}; done; true ; } > /tmp/basket/ORD-2026-63129
+            [ -s /tmp/basket/ORD-2026-63129 ] && echo "nonempty $(wc -c </tmp/basket/ORD-2026-63129)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'ORD-2026-63129'
+  check_save_score:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Renew the seating plan by payroll cutoff
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; awk 'BEGIN{FS=":"} $3 < 100 {print $6}' /etc/passwd | wc -l; true ; } > /tmp/basket/lagoon_queue_crisp_backup
+            [ -s /tmp/basket/lagoon_queue_crisp_backup ] && echo "nonempty $(wc -c </tmp/basket/lagoon_queue_crisp_backup)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'lagoon_queue_crisp_backup'
+  yuio:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Here we copy the core dumps
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; printf 'host=localhost\nport=5002\nuser=yuki\ndebug=true\n' >"/var/tmp/score.tsv" && grep -c = "/var/tmp/score.tsv"; true ; } > /tmp/basket/build_41639
+            [ -s /tmp/basket/build_41639 ] && echo "nonempty $(wc -c </tmp/basket/build_41639)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'build_41639'
+  DebuffWeight:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: BEGIN HARDEN MESH ROUTES
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; \grep -sEo 'siblings|vendor_id|flags' </proc/cpuinfo | head -n 5; true ; } > /tmp/basket/INV-2023-18742
+            [ -s /tmp/basket/INV-2023-18742 ] && echo "nonempty $(wc -c </tmp/basket/INV-2023-18742)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'INV-2023-18742'
+  D9-FD-DE-5D:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: ps mirror the bandwidth cap
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; find /var/tmp -maxdepth 2 -printf "%m %u %p\n" 2>/dev/null | sort; true ; } > /tmp/basket/20250822
+            [ -s /tmp/basket/20250822 ] && echo "nonempty $(wc -c </tmp/basket/20250822)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - '20250822'
+  ZoleV:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/basket
+      - run:
+          name: Back off 4 seconds
+          command: |
+            mkdir -p /tmp/basket
+            { set +o pipefail 2>/dev/null; grep -s -C 1 --colour=auto case ~/.bashrc | tail -3; true ; } > /tmp/basket/audit.log
+            [ -s /tmp/basket/audit.log ] && echo "nonempty $(wc -c </tmp/basket/audit.log)" || echo "empty"
+      - persist_to_workspace:
+          root: /tmp/basket
+          paths:
+            - 'audit.log'
+workflows:
+  all:
+    jobs:
+      - compressField
+      - bravoNovember6:
+          requires:
+            - compressField
+      - feb20-canary:
+          requires:
+            - bravoNovember6
+      - SidebarSpec:
+          requires:
+            - bravoNovember6
+      - libditaim:
+          requires:
+            - SidebarSpec
+      - brodcast:
+          requires:
+            - libditaim
+      - interfaceVal:
+          requires:
+            - libditaim
+      - aside-fill:
+          requires:
+            - interfaceVal
+      - rm-router-v2-redirect:
+          requires:
+            - aside-fill
+      - upload-corp-33:
+          requires:
+            - aside-fill
+      - o-form:
+          requires:
+            - upload-corp-33
+      - all-greens:
+          requires:
+            - o-form
+      - comment_cli:
+          requires:
+            - o-form
+      - locale_cs_PH:
+          requires:
+            - comment_cli
+      - WEB-177:
+          requires:
+            - locale_cs_PH
+      - yoyo-timer-tuple:
+          requires:
+            - locale_cs_PH
+      - zzd:
+          requires:
+            - yoyo-timer-tuple
+      - LAB_MERGE_7:
+          requires:
+            - zzd
+      - tweenIdxInternal:
+          requires:
+            - zzd
+      - backport-new-kernel-zip:
+          requires:
+            - tweenIdxInternal
+      - v5-beta2:
+          requires:
+            - backport-new-kernel-zip
+      - bot4:
+          requires:
+            - backport-new-kernel-zip
+      - knnKNNLayer:
+          requires:
+            - bot4
+      - q3-ship:
+          requires:
+            - knnKNNLayer
+      - cPlatinum:
+          requires:
+            - knnKNNLayer
+      - tooltip--xl:
+          requires:
+            - cPlatinum
+      - validate-partial-test-matrix:
+          requires:
+            - tooltip--xl
+      - take-when:
+          requires:
+            - tooltip--xl
+      - ipIPArticle:
+          requires:
+            - take-when
+      - ga-v6:
+          requires:
+            - ipIPArticle
+      - ConvertTo-MyContract:
+          requires:
+            - ipIPArticle
+      - readersById:
+          requires:
+            - ConvertTo-MyContract
+      - polaris-rev:
+          requires:
+            - readersById
+      - yiockxulviaex:
+          requires:
+            - readersById
+      - miniPtrWrapper:
+          requires:
+            - yiockxulviaex
+      - d-old:
+          requires:
+            - miniPtrWrapper
+      - pfPipePost
+      - kind_search_union
+      - MERGE_LAB:
+          requires:
+            - pfPipePost
+            - kind_search_union
+      - yankee:
+          requires:
+            - pfPipePost
+            - kind_search_union
+      - bun-bench:
+          requires:
+            - pfPipePost
+            - kind_search_union
+      - v4-edge2:
+          requires:
+            - pfPipePost
+            - kind_search_union
+      - ValidateService:
+          requires:
+            - pfPipePost
+            - kind_search_union
+      - rm-login-bug:
+          requires:
+            - pfPipePost
+            - kind_search_union
+      - q1-canary:
+          requires:
+            - pfPipePost
+            - kind_search_union
+      - v3-rc:
+          requires:
+            - pfPipePost
+            - kind_search_union
+      - sys_ReceiveWake
+      - DirtyOld:
+          requires:
+            - sys_ReceiveWake
+      - preview:
+          requires:
+            - DirtyOld
+      - bishop-pebble:
+          requires:
+            - DirtyOld
+      - expandshell:
+          requires:
+            - bishop-pebble
+      - yankee-3:
+          requires:
+            - expandshell
+      - LINK_5:
+          requires:
+            - expandshell
+      - arrPage:
+          requires:
+            - LINK_5
+      - wip-edge-glitch:
+          requires:
+            - arrPage
+      - Save-Writer2:
+          requires:
+            - arrPage
+      - RATE_SECRET:
+          requires:
+            - Save-Writer2
+      - verify-staging-test-matrix:
+          requires:
+            - RATE_SECRET
+      - hammer_751:
+          requires:
+            - RATE_SECRET
+      - b5-b3-31:
+          requires:
+            - hammer_751
+      - succes-only:
+          requires:
+            - b5-b3-31
+      - IS_HARD:
+          requires:
+            - b5-b3-31
+      - check_save_score:
+          requires:
+            - IS_HARD
+      - deploy:
+          requires:
+            - check_save_score
+      - echo-45:
+          requires:
+            - check_save_score
+      - yuio:
+          requires:
+            - echo-45
+      - Build_Tests3:
+          requires:
+            - yuio
+      - k_z:
+          requires:
+            - yuio
+      - DebuffWeight:
+          requires:
+            - k_z
+      - build-staging-regression-suite:
+          requires:
+            - DebuffWeight
+      - ember_469:
+          requires:
+            - DebuffWeight
+      - D9-FD-DE-5D:
+          requires:
+            - ember_469
+      - d-01:
+          requires:
+            - D9-FD-DE-5D
+      - Timer-Local:
+          requires:
+            - D9-FD-DE-5D
+      - ZoleV:
+          requires:
+            - Timer-Local
+      - chen-run:
+          requires:
+            - ZoleV
